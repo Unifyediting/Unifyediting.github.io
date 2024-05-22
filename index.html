@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="Deformable Neural Radiance Fields creates free-viewpoint portraits (nerfies) from casually captured videos.">
+  <meta name="keywords" content="Nerfies, D-NeRF, NeRF">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Unified Editing of Panorama, 3D Scenes, and Videos
+    Through Disentangled Self-Attention Injection</title>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-PYVRSFMDRL');
+  </script>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./static/images/favicon.svg">
+  <link rel="stylesheet"  href="./static/css/style.css"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/comic-mono@0.0.1/index.css">
+
+  <!-- For panorama -->
+  <link rel="stylesheet"  href="./static/css/zoom.css"/>
+  <script src="./static/js/zoom.js"></script>
+
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+  
+</head>
+<body>
+
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+  <!-- <div class="navbar-menu">
+    <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
+      <a class="navbar-item" href="https://keunhong.com">
+      <span class="icon">
+          <i class="fas fa-home"></i>
+      </span>
+      </a>
+
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link">
+          More Research
+        </a>
+        <div class="navbar-dropdown">
+          <a class="navbar-item" href="https://hypernerf.github.io">
+            HyperNeRF
+          </a>
+          <a class="navbar-item" href="https://nerfies.github.io">
+            Nerfies
+          </a>
+          <a class="navbar-item" href="https://latentfusion.github.io">
+            LatentFusion
+          </a>
+          <a class="navbar-item" href="https://photoshape.github.io">
+            PhotoShape
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div> -->
+</nav>
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">
+            <div class="title">
+            Unified Editing of Panorama, 3D Scenes, and Videos
+            Through Disentangled Self-Attention Injection
+            </div>
+          </h1>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <p>Anonymous Authors</p><sup></sup></span>
+            <!-- <span class="author-block">
+              <a href="https://utkarshsinha.com">Utkarsh Sinha</a><sup>2</sup>,</span>
+            <span class="author-block">
+              <a href="https://jonbarron.info">Jonathan T. Barron</a><sup>2</sup>,
+            </span>
+            <span class="author-block">
+              <a href="http://sofienbouaziz.com">Sofien Bouaziz</a><sup>2</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://www.danbgoldman.com">Dan B Goldman</a><sup>2</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://homes.cs.washington.edu/~seitz/">Steven M. Seitz</a><sup>1,2</sup>,
+            </span>
+            <span class="author-block">
+              <a href="http://www.ricardomartinbrualla.com">Ricardo Martin-Brualla</a><sup>2</sup>
+            </span> -->
+          </div>
+
+          <!-- <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup>1</sup>University of Washington,</span>
+            <span class="author-block"><sup>2</sup>Google Research</span>
+          </div> -->
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF Link. -->
+              <!-- <span class="link-block">
+                <a href="https://arxiv.org/pdf/2011.12948"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="https://arxiv.org/abs/2011.12948"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span> -->
+              <!-- Video Link. -->
+              <!-- <span class="link-block">
+                <a href="https://www.youtube.com/watch?v=MrKrnHhk8IA"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-youtube"></i>
+                  </span>
+                  <span>Video</span>
+                </a>
+              </span> -->
+              <!-- Code Link. -->
+              <span class="link-block">
+                <a href=""
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                  </a>
+              </span>
+              
+              <!-- Dataset Link. -->
+              <!-- <span class="link-block"> -->
+                <!-- <a href="https://github.com/google/nerfies/releases/tag/0.1"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="far fa-images"></i>
+                  </span>
+                  <span>Data</span>
+                  </a> -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+      <!-- <video id="teaser" autoplay muted loop playsinline height="100%">
+        <source src="./static/videos/teaser.mp4"
+                type="video/mp4">
+      </video> -->
+      <h2 class="subtitle has-text-centered">
+          <div class="tldr">
+            TL;DR: <span class="tldr highlight">Unifying image editing method</span> via 2D image text-to-image(T2I) Diffusion Model 
+            <p></p> <span class="tldr underline">with shared self-attention features</span> and <span class="tldr underline">consecutive image sampling processes.</span>
+          </div>
+      </h2>
+  </div>
+</section>
+
+<section class="section">
+  <!-- <div class="container is-max-desktop"> -->
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <div class="Abstract">
+            While text-to-image models have achieved impressive capabilities in image
+            generation and editing, their application across various modalities often 
+            necessitates training separate models.  We propose a novel editing method 
+            enabling unified editing across modalities utilizing only a basic 2D image 
+            text-to-image (T2I) diffusion model. We design a sampling method that 
+            facilitates editing consecutive images while maintaining semantic consistency 
+            utilizing shared self-attention features during both reference and consecutive 
+            image sampling processes. Inspired by existing method of single image editing 
+            with self attention injection and video editing with shared attention, 
+            we propose a novel unified editing framework that combines the strengths of 
+            both approaches. Different from previous work, our method enables editing across 
+            diverse modalities including 3D scenes, videos, and panorama images.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+    <!--/ Abstract. -->
+</section>
+
+<div style="display: flex; justify-content: center;">
+  <hr style="border-top: 1px solid outset black; width: 90%; margin: 0 auto 20px;">
+</div>
+
+<!-- Plot Panorama Image -->
+<div class="columns is-centered has-text-centered">
+  <h2 class="title is-3">Panorama Editing</h2>
+</div><span style="display: inline-block; width: 100%; text-align: center; color:black; font-family: 'Comic Mono', sans-serif; font-size: 26px;">
+  <b><i>"ivy covered buildings"</i></b> 
+</span>
+<div class="img-container" style="display: flex; justify-content: center;">
+  <div class="img-zoom-container">
+      <img id="myimage1" src="pano_images/vienna_original.jpg" width="1000" height="300">
+      <div id="myresult1" class="img-zoom-result"></div>
+  </div>
+</div>
+
+
+<div class="img-container" style="display: flex; justify-content: center; margin-bottom: 20px;">
+  <div class="img-zoom-container">
+    <img id="myimage2" src="pano_images/ours_ivycovered.jpg" width="1000" height="300">
+    <div id="myresult2" class="img-zoom-result"></div>
+  </div>
+</div>
+
+<div class="columns is-centered has-text-centered">
+  <script>
+    // Initiate zoom effect for the images
+    imageZoom("myimage1", "myimage2", "myresult1", "myresult2");
+    
+    // Get the height of myimage1
+    var imageHeight1 = document.getElementById("myimage1").height;
+    // Set the height of myresult1 to match myimage1
+    document.getElementById("myresult1").style.height = imageHeight1 + "px";
+    
+    // Get the height of myimage2
+    var imageHeight2 = document.getElementById("myimage2").height;
+    // Set the height of myresult2 to match myimage2
+    document.getElementById("myresult2").style.height = imageHeight2 + "px";
+  </script>
+</div>
+
+<!-- Plot 3D Scene Editing -->
+
+<!-- Comparison with other methods  -->
+<div id="results" style='background-color: rgb(243, 242, 242)'>
+  <br>
+  <!-- <h2 class="tldr" style="font-size: 28px;">Comparison with state-of-the-art approaches</h2> -->
+  <div>
+    <!-- Plot 3D Scene Editing -->
+    <div class="columns is-centered has-text-centered">
+      <h2 class="title is-3">3D Scene Editing</h2>
+    </div>
+
+    <span style="display: inline-block; width: 100%; text-align: center; color:black; font-family: 'Comic Mono', sans-serif; font-size: 26px;">
+      <b><i>"a sketch of flowers"</i></b> 
+    </span>
+    <br>
+      <table style="width: 90%;margin-left:auto;margin-right:auto; text-align: center;">
+          <tbody>
+            <th>
+                <video autoplay="" muted="" loop="" width="300">
+                    <source src="examples/video_nerf/flower_original.mp4">
+                </video>
+                <div>
+                  <span style="font-size: 21px;">Original NeRF</span>
+                </div>
+              <th>
+                  <video autoplay="" muted="" loop="" width="300">
+                      <source src="video_nerf/sketch_clipnerf.mp4">
+                  </video>
+                  <div>
+                    <span style="font-size: 21px;">CLIP-NeRF</span>
+                  </div>
+              </th>
+              <th>
+                  <video autoplay="" muted="" loop="" width="300">
+                      <source src="video_nerf/sketch_nertart.mp4">
+                  </video>
+                  <div>
+                    <span style="font-size: 21px;">NeRF_ART</span>
+                  </div>
+              </th>
+              <th>
+                  <video autoplay="" muted="" loop="" width="300">
+                      <source src="video_nerf/in2n_flower_sketch.mp4">
+                  </video>
+                  <div>
+                    <span style="font-size: 21px;">Instruct NeRF2NeRF</span>
+                  </div>
+              </th>
+              </th>
+              <th>
+                  <video autoplay="" muted="" loop="" width="300">
+                      <source src="video_nerf/sketch_ours.mp4">
+                  </video>
+                  <div class="tldr highlight" style="font-size: 16px;">
+                    <span style="font-size: 21px;">UnifyEdit (ours)</span>
+                  </div>
+              </th>
+        </tbody>
+      </table>
+    <br><br>
+
+    <span style="display: inline-block; width: 100%; text-align: center; color:black; font-family: 'Comic Mono', sans-serif; font-size: 26px;">
+      <b><i>"a photo of onions"</i></b> 
+    </span>
+    <br>
+      <table style="width: 90%;margin-left:auto;margin-right:auto; text-align: center;">
+          <tbody>
+            <th>
+                <video autoplay="" muted="" loop="" width="300">
+                    <source src="video_nerf/apple_original.mp4">
+                </video>
+                <div>
+                  <span style="font-size: 21px;">Original NeRF</span>
+                </div>
+              <th>
+                  <video autoplay="" muted="" loop="" width="300">
+                      <source src="video_nerf/apple_onion_clipnerf.mp4">
+                  </video>
+                  <div>
+                    <span style="font-size: 21px;">CLIP-NeRF</span>
+                  </div>
+              </th>
+              <th>
+                  <video autoplay="" muted="" loop="" width="300">
+                      <source src="video_nerf/apple_onion_nerfart.mp4">
+                  </video>
+                  <div>
+                    <span style="font-size: 21px;">NeRF_ART</span>
+                  </div>
+              </th>
+              <th>
+                  <video autoplay="" muted="" loop="" width="300">
+                      <source src="video_nerf/apple_onion_ours.mp4">
+                  </video>
+                  <div>
+                    <span style="font-size: 21px;">Instruct NeRF2NeRF</span>
+                  </div>
+              </th>
+              </th>
+              <th>
+                  <video autoplay="" muted="" loop="" width="300">
+                      <source src="video_nerf/apple_onion_ours.mp4">
+                  </video>
+                  <div class="tldr highlight" style="font-size: 16px;">
+                    <span style="font-size: 21px;">UnifyEdit (ours)</span>
+                  </div>
+              </th>
+        </tbody>
+      </table>
+
+    <div style="display: flex; justify-content: center;">
+      <hr style="border-top: 3px groove  rgba(35, 3, 3, 0.385); width: 90%; margin-top: 5px margin;">
+    </div>
+
+    <div class="columns is-centered has-text-centered">
+      <h2 class="title is-3">Video Editing</h2>
+    </div>
+    <span style="display: inline-block; width: 100%; text-align: center; color:black; font-family: 'Comic Mono', sans-serif; font-size: 26px;">
+      <b><i>"Cow walking on the water, van gogh"</i></b> 
+    </span>
+    
+    <br>
+      <table style="width: 90%;margin-left:auto;margin-right:auto; text-align: center;">
+          <tbody>
+              <th>
+                <video autoplay="" muted="" loop="" width="300">
+                    <source src="examples/compress/beear_gen1.mp4">
+                </video>
+                <div>
+                  <span style="font-size: 21px;">Gen1</span>
+                </div>
+              </th>
+              <th>
+                <video autoplay="" muted="" loop="" width="300" height="150">
+                  <source src="examples/compress/bear_p2v.mp4">
+                </video>
+                  <div>
+                    <span style="font-size: 21px;">P2V</span>
+                  </div>
+              </th>
+              <th>
+                  <video autoplay="" muted="" loop="" width="300">
+                      <source src="examples/compress/bear_csd.mp4">
+                  </video>
+                  <div>
+                    <span style="font-size: 21px;">CSD</span>
+                  </div>
+              </th>
+              <th>
+                  <video autoplay="" muted="" loop="" width="300">
+                      <source src="examples/compress/bear_gogh_ours.mp4">
+                  </video>
+                  <div>
+                    <div class="tldr highlight" style="font-size: 16px;">
+                    <span style="font-size: 21px;">UnifyEdit(Ours)</span>
+                    </div>
+                  </div>
+              </th>
+        </tbody>
+      </table>
+    <br><br>
+    
+    
+  </div>
+</div>
+<!-- End Comparison with other methods  -->
+
+
+<!-- 
+<section class="section">
+  <div class="container is-max-desktop">
+
+    <div class="columns is-centered"> -->
+
+      <!-- Visual Effects. -->
+      <!-- <div class="column">
+        <div class="content">
+          <h2 class="title is-3">Visual Effects</h2>
+          <p>
+            Using <i>nerfies</i> you can create fun visual effects. This Dolly zoom effect
+            would be impossible without nerfies since it would require going through a wall.
+          </p>
+        </div>
+      </div> -->
+      <!--/ Visual Effects. -->
+
+      <!-- Matting. -->
+      <!-- <div class="column">
+        <h2 class="title is-3">Matting</h2>
+        <div class="columns is-centered">
+          <div class="column content">
+            <p>
+              As a byproduct of our method, we can also solve the matting problem by ignoring
+              samples that fall outside of a bounding box during rendering.
+            </p>
+          </div> -->
+
+        <!-- </div>
+      </div>
+    </div> -->
+
+    
+    <!--/ Matting. -->
+
+    <!-- Animation. -->
+    <!-- <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Animation</h2> -->
+
+        <!-- Interpolating. -->
+        <!-- <h3 class="title is-4">Interpolating states</h3>
+        <div class="content has-text-justified">
+          <p>
+            We can also animate the scene by interpolating the deformation latent codes of two input
+            frames. Use the slider here to linearly interpolate between the left frame and the right
+            frame.
+          </p>
+        </div>
+        <div class="columns is-vcentered interpolation-panel">
+          <div class="column is-3 has-text-centered">
+          </div>
+          <div class="column interpolation-video-column">
+            <div id="interpolation-image-wrapper">
+              Loading...
+            </div>
+            <input class="slider is-fullwidth is-large is-info"
+                   id="interpolation-slider"
+                   step="1" min="0" max="100" value="0" type="range">
+          </div>
+          <div class="column is-3 has-text-centered">
+          </div>
+        </div>
+        <br/> -->
+        <!--/ Interpolating. -->
+
+        <!--/ Re-rendering. -->
+
+      <!-- </div>
+    </div> -->
+    <!--/ Animation. -->
+
+
+    <!-- Concurrent Work. -->
+    <!-- <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Related Links</h2>
+
+        <div class="content has-text-justified">
+          <p>
+            There's a lot of excellent work that was introduced around the same time as ours.
+          </p>
+          <p>
+            <a href="https://arxiv.org/abs/2104.09125">Progressive Encoding for Neural Optimization</a> introduces an idea similar to our windowed position encoding for coarse-to-fine optimization.
+          </p>
+          <p>
+            <a href="https://www.albertpumarola.com/research/D-NeRF/index.html">D-NeRF</a> and <a href="https://gvv.mpi-inf.mpg.de/projects/nonrigid_nerf/">NR-NeRF</a>
+            both use deformation fields to model non-rigid scenes.
+          </p>
+          <p>
+            Some works model videos with a NeRF by directly modulating the density, such as <a href="https://video-nerf.github.io/">Video-NeRF</a>, <a href="https://www.cs.cornell.edu/~zl548/NSFF/">NSFF</a>, and <a href="https://neural-3d-video.github.io/">DyNeRF</a>
+          </p>
+          <p>
+            There are probably many more by the time you are reading this. Check out <a href="https://dellaert.github.io/NeRF/">Frank Dellart's survey on recent NeRF papers</a>, and <a href="https://github.com/yenchenlin/awesome-NeRF">Yen-Chen Lin's curated list of NeRF papers</a>.
+          </p>
+        </div>
+      </div>
+    </div> -->
+    <!--/ Concurrent Work. -->
+
+  </div>
+</section>
+
+
+<section class="section" id="BibTeX">
+  <!-- <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <pre><code>@article{park2021nerfies,
+  author    = {Park, Keunhong and Sinha, Utkarsh and Barron, Jonathan T. and Bouaziz, Sofien and Goldman, Dan B and Seitz, Steven M. and Martin-Brualla, Ricardo},
+  title     = {Nerfies: Deformable Neural Radiance Fields},
+  journal   = {ICCV},
+  year      = {2021},
+}</code></pre>
+  </div> -->
+</section>
+
+
+<footer class="footer">
+  <div class="container">
+    <!-- <div class="content has-text-centered">
+      <a class="icon-link"
+         href="./static/videos/nerfies_paper.pdf">
+        <i class="fas fa-file-pdf"></i>
+      </a>
+      <a class="icon-link" href="https://github.com/keunhong" class="external-link" disabled>
+        <i class="fab fa-github"></i>
+      </a>
+    </div> -->
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This website is licensed under a <a rel="license"
+                                                href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+          <p>
+            This means you are free to borrow the <a
+              href="https://github.com/nerfies/nerfies.github.io">source code</a> of this website,
+            we just ask that you link back to this page in the footer.
+            Please remember to remove the analytics code included in the header of the website which
+            you do not want on your website.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
