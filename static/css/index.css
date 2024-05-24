@@ -198,3 +198,120 @@ body {
 .underline{
   text-decoration: underline;
 }
+
+
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.header-container {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.main-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.buttons-container {
+  display: flex;
+  flex-direction: column;
+  margin: 0 20px;
+}
+
+.buttons-container button {
+  border-radius: 12px;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  font-family: 'Comic Sans MS', cursive, sans-serif;
+  font-size: 16px;
+  cursor: pointer;
+  margin: 5px 0;
+  transition: background-color 0.3s;
+}
+
+.buttons-container button:hover,
+.buttons-container button.active {
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.img-container-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.caption {
+  position: absolute;
+  bottom: 10px; /* 하단에서의 간격 */
+  left: 50%; /* 가로 중앙 */
+  transform: translateX(-50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-family: 'Comic Sans MS', cursive, sans-serif;
+  font-size: 14px;
+  text-align: center;
+}
+
+.caption-center {
+  bottom: 50%; /* 이미지의 중앙 위치 */
+  transform: translate(-50%, 50%);
+}
+
+
+.img-zoom-container {
+  position: relative;
+  display: flex;
+  cursor: zoom-in; /* 커서를 돋보기 모양으로 설정 */
+}
+
+.img-zoom-lens {
+  position: absolute;
+  border: 1px solid #d4d4d4;
+  width: 150px;
+  height: 150px;
+  pointer-events: none; /* 렌즈가 마우스 이벤트를 받지 않도록 설정 */
+}
+
+.img-zoom-result {
+  border: 1px solid #d4d4d4;
+  width: 450px;
+  height: 450px;
+  background-repeat: no-repeat;
+}
+
+.img-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+
+.image-container {
+  margin: 1px;
+  flex-direction: column;
+}
+
+.column-container {
+  display: flex;
+  margin: 1px;
+  flex-direction: column;
+  width: 1000;
+  height: 300;
+}
+
+/* .caption {
+  text-align: center;
+  margin-top: 10px;
+} */

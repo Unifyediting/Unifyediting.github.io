@@ -231,42 +231,72 @@
 </div>
 
 <!-- Plot Panorama Image -->
-<div class="columns is-centered has-text-centered">
-  <h2 class="title is-3">Panorama Editing</h2>
-</div><span style="display: inline-block; width: 100%; text-align: center; color:black; font-family: 'Comic Mono', sans-serif; font-size: 26px;">
-  <b><i>"ivy covered buildings"</i></b> 
-</span>
-<div class="img-container" style="display: flex; justify-content: center;">
-  <div class="img-zoom-container">
-      <img id="myimage1" src="pano_images/vienna_original.jpg" width="1000" height="300">
-      <div id="myresult1" class="img-zoom-result"></div>
-  </div>
-</div>
-
-
-<div class="img-container" style="display: flex; justify-content: center; margin-bottom: 20px;">
-  <div class="img-zoom-container">
-    <img id="myimage2" src="pano_images/ours_ivycovered.jpg" width="1000" height="300">
-    <div id="myresult2" class="img-zoom-result"></div>
-  </div>
-</div>
-
-<div class="columns is-centered has-text-centered">
+<body>
   <script>
-    // Initiate zoom effect for the images
-    imageZoom("myimage1", "myimage2", "myresult1", "myresult2");
-    
-    // Get the height of myimage1
-    var imageHeight1 = document.getElementById("myimage1").height;
-    // Set the height of myresult1 to match myimage1
-    document.getElementById("myresult1").style.height = imageHeight1 + "px";
-    
-    // Get the height of myimage2
-    var imageHeight2 = document.getElementById("myimage2").height;
-    // Set the height of myresult2 to match myimage2
-    document.getElementById("myresult2").style.height = imageHeight2 + "px";
+    var originalImage1 = 'pano_images/vienna/original/ivy.jpg';
+    var originalImage2 = 'pano_images/vienna/original/redbrick.jpg';
+    var csdImage1 = 'pano_images/vienna/csd/ivy.png';
+    var csdImage2 = 'pano_images/vienna/csd/redbrick.jpg';
+    var syncImage1 = 'pano_images/vienna/sync/ivy.png';
+    var syncImage2 = 'pano_images/vienna/sync/redbrick.jpg';
+    var oursimage1 = 'pano_images/vienna/ours/ivy.png';
+    var oursimage2 = 'pano_images/vienna/ours/redbrick.jpg';
   </script>
-</div>
+  <div class="header-container">
+      <h2 class="title is-3">Panorama Editing</h2>
+  </div>
+  <div class="main-container">
+      <div class="buttons-container">
+          <button onclick="setActiveButton(this); changeImage(originalImage1,oursimage1, 'Original', 'myimage1', 'myresult1', 'myimage2', 'myresult2')">Original</button>
+          <button onclick="setActiveButton(this); changeImage(csdImage1,oursimage1, 'CSD', 'myimage1', 'myresult1', 'myimage2', 'myresult2')">CSD</button>
+          <button onclick="setActiveButton(this); changeImage(syncImage1,oursimage1, 'SyncDiffusion', 'myimage1', 'myresult1', 'myimage2', 'myresult2')">
+            SyncDiffusion
+          </button>
+      </div>
+      <div class="column-container">
+          <div class="img-container">
+            <div class="image-container">
+                <div class="img-zoom-container">
+                    <img id="myimage1" src="pano_images/vienna/original/ivy.jpg" width="1200" height="450">
+                    <div class="caption">Original</div>
+                </div>
+            </div>
+            <div class="image-container">
+                <div class="img-zoom-container">
+                    <div id="myresult1" class="img-zoom-result"></div>
+                </div>
+            </div>
+          </div>
+          
+          <div class="img-container">
+              <div class="image-container">
+                  <div class="img-zoom-container">
+                      <img id="myimage2" src="pano_images/vienna/ours/ivy.jpg" width="1200" height="450">
+                      <div class="caption">UnifyEdit(Ours)</div>
+                  </div>
+              </div>
+              <div class="image-container">
+                  <div class="img-zoom-container">
+                      <div id="myresult2" class="img-zoom-result"></div>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <div class="buttons-container">
+        <button id="condition1" onclick="setActiveButton(this); changeCondition('ivy')">Ivy Covered</button>
+        <button id="condition2" onclick="setActiveButton(this); changeCondition('redbrick')">Redbrick</button>
+      </div>
+  </div>
+  <script>
+      // Initiate zoom effect for the images
+      imageZoom("myimage1", "myimage2", "myresult1", "myresult2");
+  
+      // Set the initial height for the zoom result containers
+      document.getElementById("myresult1").style.height = document.getElementById("myimage1").height + "px";
+      document.getElementById("myresult2").style.height = document.getElementById("myimage2").height + "px";
+  </script>
+</body>
+
 
 <!-- Plot 3D Scene Editing -->
 
@@ -280,6 +310,46 @@
       <h2 class="title is-3">3D Scene Editing</h2>
     </div>
 
+    <br>
+      <table style="width: 90%;margin-left:auto;margin-right:auto; text-align: center;">
+          <tbody>
+            <th>
+                <video autoplay="" muted="" loop="" width="300">
+                    <source src="examples/video_nerf/flower/flower_original.mp4">
+                </video>
+                <div>
+                  <span style="font-size: 21px;">Original NeRF</span>
+                </div>
+              <th>
+                  <video autoplay="" muted="" loop="" width="300">
+                      <source src="examples/video_nerf/flower/ours/ours_ukiyo.mp4">
+                  </video>
+                  <div>
+                    <span style="font-family: 'Comic Mono', sans-serif;font-size: 18px;"><b><i>"flowers,ukiyo-e style"</i></b></span>
+                  </div>
+              </th>
+              <th>
+                  <video autoplay="" muted="" loop="" width="300">
+                      <source src="examples/video_nerf/flower/ours/ours_lego.mp4">
+                  </video>
+                  <div>
+                    <span style="font-family: 'Comic Mono', sans-serif;font-size: 18px;"><b><i>"lego flowers"</i></b></span>
+                  </div>
+              </th>
+              <th>
+                  <video autoplay="" muted="" loop="" width="300">
+                      <source src="examples/video_nerf/flower/ours/ours_watercolor.mp4">
+                  </video>
+                  <div>
+                    <span style="font-family: 'Comic Mono', sans-serif;font-size: 18px;"><b><i>"flowers, watercolor style"</i></b></span>
+                  </div>
+        </tbody>
+      </table>
+
+    
+      <div style="display: flex; justify-content: center;">
+        <hr style="border-top: 3px groove  rgba(35, 3, 3, 0.385); width: 90%; margin-top: 5px margin;">
+      </div>
     <span style="display: inline-block; width: 100%; text-align: center; color:black; font-family: 'Comic Mono', sans-serif; font-size: 26px;">
       <b><i>"a sketch of flowers"</i></b> 
     </span>
@@ -288,14 +358,14 @@
           <tbody>
             <th>
                 <video autoplay="" muted="" loop="" width="300">
-                    <source src="examples/video_nerf/flower_original.mp4">
+                    <source src="examples/video_nerf/flower/flower_original.mp4">
                 </video>
                 <div>
                   <span style="font-size: 21px;">Original NeRF</span>
                 </div>
               <th>
                   <video autoplay="" muted="" loop="" width="300">
-                      <source src="video_nerf/sketch_clipnerf.mp4">
+                      <source src="examples/video_nerf/flower/sketch/flower_sketch_clipnerf.mp4">
                   </video>
                   <div>
                     <span style="font-size: 21px;">CLIP-NeRF</span>
@@ -303,7 +373,7 @@
               </th>
               <th>
                   <video autoplay="" muted="" loop="" width="300">
-                      <source src="video_nerf/sketch_nertart.mp4">
+                      <source src="examples/video_nerf/flower/sketch/flower_sketch_nertart.mp4">
                   </video>
                   <div>
                     <span style="font-size: 21px;">NeRF_ART</span>
@@ -311,7 +381,7 @@
               </th>
               <th>
                   <video autoplay="" muted="" loop="" width="300">
-                      <source src="video_nerf/in2n_flower_sketch.mp4">
+                      <source src="examples/video_nerf/flower/sketch/flower_sketch_in2n.mp4">
                   </video>
                   <div>
                     <span style="font-size: 21px;">Instruct NeRF2NeRF</span>
@@ -320,7 +390,7 @@
               </th>
               <th>
                   <video autoplay="" muted="" loop="" width="300">
-                      <source src="video_nerf/sketch_ours.mp4">
+                      <source src="examples/video_nerf/flower/sketch/flower_sketch_ours.mp4">
                   </video>
                   <div class="tldr highlight" style="font-size: 16px;">
                     <span style="font-size: 21px;">UnifyEdit (ours)</span>
@@ -328,56 +398,55 @@
               </th>
         </tbody>
       </table>
-    <br><br>
 
-    <span style="display: inline-block; width: 100%; text-align: center; color:black; font-family: 'Comic Mono', sans-serif; font-size: 26px;">
-      <b><i>"a photo of onions"</i></b> 
-    </span>
-    <br>
-      <table style="width: 90%;margin-left:auto;margin-right:auto; text-align: center;">
-          <tbody>
-            <th>
-                <video autoplay="" muted="" loop="" width="300">
-                    <source src="video_nerf/apple_original.mp4">
-                </video>
-                <div>
-                  <span style="font-size: 21px;">Original NeRF</span>
-                </div>
+      <span style="display: inline-block; width: 100%; text-align: center; color:black; font-family: 'Comic Mono', sans-serif; font-size: 26px;">
+        <b><i>"ice castle on the snow"</i></b> 
+      </span>
+      <br>
+        <table style="width: 90%;margin-left:auto;margin-right:auto; text-align: center;">
+            <tbody>
               <th>
                   <video autoplay="" muted="" loop="" width="300">
-                      <source src="video_nerf/apple_onion_clipnerf.mp4">
+                      <source src="examples/video_nerf/castle/fortress.mp4">
                   </video>
                   <div>
-                    <span style="font-size: 21px;">CLIP-NeRF</span>
+                    <span style="font-size: 21px;">Original NeRF</span>
                   </div>
-              </th>
-              <th>
-                  <video autoplay="" muted="" loop="" width="300">
-                      <source src="video_nerf/apple_onion_nerfart.mp4">
-                  </video>
-                  <div>
-                    <span style="font-size: 21px;">NeRF_ART</span>
-                  </div>
-              </th>
-              <th>
-                  <video autoplay="" muted="" loop="" width="300">
-                      <source src="video_nerf/apple_onion_ours.mp4">
-                  </video>
-                  <div>
-                    <span style="font-size: 21px;">Instruct NeRF2NeRF</span>
-                  </div>
-              </th>
-              </th>
-              <th>
-                  <video autoplay="" muted="" loop="" width="300">
-                      <source src="video_nerf/apple_onion_ours.mp4">
-                  </video>
-                  <div class="tldr highlight" style="font-size: 16px;">
-                    <span style="font-size: 21px;">UnifyEdit (ours)</span>
-                  </div>
-              </th>
-        </tbody>
-      </table>
+                <th>
+                    <video autoplay="" muted="" loop="" width="300">
+                      <source src="examples/video_nerf/castle/ice/fortress_ice_clipnerf.mp4">
+                    </video>
+                    <div>
+                      <span style="font-size: 21px;">CLIP-NeRF</span>
+                    </div>
+                </th>
+                <th>
+                    <video autoplay="" muted="" loop="" width="300">
+                      <source src="examples/video_nerf/castle/ice/fortress_ice_nerfart.mp4">
+                    </video>
+                    <div>
+                      <span style="font-size: 21px;">NeRF_ART</span>
+                    </div>
+                </th>
+                <th>
+                    <video autoplay="" muted="" loop="" width="300">
+                      <source src="examples/video_nerf/castle/ice/fortress_ice_in2n.mp4">
+                    </video>
+                    <div>
+                      <span style="font-size: 21px;">Instruct NeRF2NeRF</span>
+                    </div>
+                </th>
+                </th>
+                <th>
+                    <video autoplay="" muted="" loop="" width="300">
+                      <source src="examples/video_nerf/castle/ice/fortress_ice_ours.mp4">
+                    </video>
+                    <div class="tldr highlight" style="font-size: 16px;">
+                      <span style="font-size: 21px;">UnifyEdit (ours)</span>
+                    </div>
+                </th>
+          </tbody>
+        </table>
 
     <div style="display: flex; justify-content: center;">
       <hr style="border-top: 3px groove  rgba(35, 3, 3, 0.385); width: 90%; margin-top: 5px margin;">
